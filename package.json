@@ -1,0 +1,31 @@
+{
+  "name": "ws-ai",
+  "version": "1.0.0",
+  "description": "Sistema simples de integração do whatsapp com inteligência artifical Gemini",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TGalter/ws-ai.git"
+  },
+  "keywords": [
+    "whatsapp",
+    "inteligencia",
+    "artificial",
+    "gemini"
+  ],
+  "author": "Thales Galter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TGalter/ws-ai/issues"
+  },
+  "homepage": "https://github.com/TGalter/ws-ai#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.17.1",
+    "dotenv": "^16.4.5",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#webpack-exodus"
+  }
+}
