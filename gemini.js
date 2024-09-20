@@ -1,45 +1,52 @@
 require('dotenv').config();
-const instruction = require('./instrucao').instruction
+const instruction = require('./instruction');
 const {
     GoogleGenerativeAI,
     HarmCategory,
     HarmBlockThreshold,
 } = require("@google/generative-ai");
 
-console.log('Instrução: ' + instruction);
-
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-    systemInstruction: instruction
+    model: "gemini-1.5-flash"
 });
 
 const generationConfig = {
     temperature: 2,
     topP: 0.95,
     topK: 64,
-    maxOutputTokens: 20,
+    maxOutputTokens: 200,
     responseMimeType: "text/plain",
 };
+
+const safetySettings = [
+    {
+      category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+      threshold: HarmBlockThreshold.BLOCK_NONE,
+    }
+  ];
 
 // Função para enviar mensagens ao Gemini e retornar a resposta
 async function generateResponseFromGemini(userInput) {
 
-    const chatSession = model.startChat({
+    let parts = instruction.parts;
+
+    parts.push({ text: `input: ${userInput}` });
+
+    const ai = await model.generateContent({
+        contents: [{ role: "user", parts }],
         generationConfig,
+        safetySettings
         // safetySettings: Adjust safety settings
         // See https://ai.google.dev/gemini-api/docs/safety-settings
-        history: [
-        ],
     });
 
-    const result = await chatSession.sendMessage(userInput);
-    let responseText = result.response.text();
-    console.log('Retorno AI: ' + result.response.text());
+    let result = ai.response.text();
+    console.log('Retorno AI: ' + result);
 
-    return responseText;
+    return result;
 
 }
 

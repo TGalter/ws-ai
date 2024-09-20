@@ -23,8 +23,7 @@ client.on('message', async (message) => {
 
     let chat = await message.getChat();
 
-    if (!chat.isGroup) 
-    {
+    if (!chat.isGroup) {
         // Aqui você chamará a função para enviar a mensagem para o Gemini
         const response = await geminiFunction.generateResponseFromGemini(message.body);
         //message.reply(response);
