@@ -5,3 +5,4 @@ sessao-whatsapp/
 session-data/
 Dockerfile
 package-lock.json
+.env

@@ -37,4 +37,4 @@ COPY . /app
 RUN npm install
 
 # Comando para iniciar o bot
-CMD ["node", "src/bot.js"]
+CMD ["node", "src/app.js"]
