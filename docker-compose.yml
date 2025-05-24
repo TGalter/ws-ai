@@ -1,12 +1,29 @@
 version: "3.8"
 
 services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ws-net
+
   ws-ai:
     image: thalesgalter/ws-ai
     container_name: ws-ai
     volumes:
-      - ./session-data:/app/session-data
+      - ./sessao-whatsapp:/app/bot-whatsapp-gemini
     environment:
-      - GEMINI_API_KEY=your_gemini_api_key
-      - INSTRUCOES=Descreva como o bot deve se comportar
-    restart: unless-stopped
+      - GEMINI_API_KEY=<sua_gemini_api_key>
+      - GEMINI_INSTRUCTION=Só seja muito engraçado.
+      - BOT_PAUSE_MINUTES=5
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    networks:
+      - ws-net
+
+networks:
+  ws-net:
+    driver: bridge
